@@ -42,7 +42,7 @@ def findMaximum(text, k):
     maxcount = max(values)
     for key, value in d.items():
         if maxcount == value:    
-            print(key, d[key])
+            print(key, end=' ')
 
 findMaximum(text, k)
 
