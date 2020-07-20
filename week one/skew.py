@@ -127,4 +127,4 @@ def MinimumSkew(sequence):
 sequence = ''
 # change your code above this line
 
-MinimumSkew(sequence)
+print(MinimumSkew(sequence))
