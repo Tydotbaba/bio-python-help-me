@@ -66,7 +66,7 @@ def findNeigbours(pattern, d):
     l = Neighbors(pattern, d)
     for i in l:
         # res += ' {}'.format(str(i))
-        print('{} '.format(i))
+        print(i, end=' ')
 
 
 findNeigbours('ACGT', 3)
