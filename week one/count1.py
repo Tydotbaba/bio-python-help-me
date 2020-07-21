@@ -75,4 +75,34 @@ d = 3
 pattern = 'ATTCTGGA'
 # # change your code above this line
 
-ApproximatePatternMatching(text, pattern, d)
+# ApproximatePatternMatching(text, pattern, d)
+
+
+# countd(text, pattern)
+def ApproximatePatternCount(text, pattern, d):
+	l = [] # initializing list of positions
+	count = 0
+	def HammingDistance(p, q):
+		d = 0
+		for i, j in zip(p, q):
+			if i != j:
+				d += 1
+		return d
+
+	def makeList(text, pattern):
+		p = len(pattern)
+		for i in range(len(text) - p + 1):
+			l.append(text[i:i + p])
+
+	makeList(text, pattern)
+	#print(l)
+	# print(HammingDistance(p, q))
+	
+	res = []
+	for i, genome in enumerate(l):
+		if HammingDistance(pattern, genome) <= d:
+			count += 1
+			res.append(i)
+
+	#print(count)
+	return len(res)
