@@ -45,7 +45,11 @@ chars = "ACGT"
 def Neighbors(pattern, d):
     l = sum([neighbors(pattern, d2) for d2 in range(d + 1)], [])
     l = set(l)
-    print(len(l))
+    # print(len(l))
+    # res = str(l.pop())
+    for i in l:
+        # res += ' {}'.format(str(i))
+        print('{} '.format(i))
     return l
     
 def neighbors(pattern, d):
