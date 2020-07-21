@@ -47,6 +47,7 @@ def Neighbors(pattern, d):
     l = set(l)
     # print(len(l))
     # res = str(l.pop())
+    l = list(l)
     for i in l:
         # res += ' {}'.format(str(i))
         print('{} '.format(i))
