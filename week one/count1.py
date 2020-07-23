@@ -99,7 +99,7 @@ def ApproximatePatternCount(text, pattern, d):
 			res.append(i)
 
 	# print(count)
-	return res
+	return ' '.join(str(res))
 
 
 
