@@ -99,7 +99,7 @@ def ApproximatePatternCount(text, pattern, d):
 			res.append(i)
 
 	# print(count)
-	return count
+	return res
 
 
 
@@ -111,7 +111,7 @@ pattern = 'AT'
 # # change your code above this line
 
 
-# print(ApproximateP[atternMatching(text, pattern, d))
+print(ApproximatePatternCount(text, pattern, d))
 
 
 
