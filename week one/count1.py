@@ -104,7 +104,10 @@ def ApproximatePatternCount(text, pattern, d):
 
 
 # change your code below this line
-text = 'AAGCAAAGGTGGG'
+# text = 'AAGCAAAGGTGGG'
+with open('vibro_cholerae.txt') as f:
+    text = f.read()
+# print(text)
 d = 1
 pattern = 'AT'
 
