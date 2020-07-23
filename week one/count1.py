@@ -64,18 +64,12 @@ def ApproximatePatternMatching(text, pattern, d):
 	for i, genome in enumerate(l):
 		if HammingDistance(pattern, genome) <= d:
 			count += 1
-			res.append(i)
+			res.append(genome)
 
 	#print(count)
 	return res
 
-# change your code below this line
-text = 'CGCCCGAATCCAGAACGCATTCCCATATTTCGGGACCACTGGCCTCCACGGTACGGACGTCAATCAAATGCCTAGCGGCTTGTGGTTTCTCCTACGCTCC'
-d = 3
-pattern = 'ATTCTGGA'
-# # change your code above this line
 
-# ApproximatePatternMatching(text, pattern, d)
 
 
 # countd(text, pattern)
@@ -104,5 +98,38 @@ def ApproximatePatternCount(text, pattern, d):
 			count += 1
 			res.append(i)
 
-	#print(count)
-	return len(res)
+	# print(count)
+	return count
+
+
+
+# change your code below this line
+text = 'AAGCAAAGGTGGG'
+d = 1
+pattern = 'AT'
+
+# # change your code above this line
+
+
+# print(ApproximateP[atternMatching(text, pattern, d))
+
+
+
+def reverse(pattern):
+	pattern_lenght = len(pattern)
+	assert pattern_lenght > 0
+	
+	if pattern_lenght >= 1:
+		res = ''
+		for i in range(pattern_lenght):
+			if pattern[i] == 'A':
+				res += 'T'
+			if pattern[i] == 'T':
+				res += 'A'
+			if pattern[i] == 'C':
+				res += 'G'
+			if pattern[i] == 'G':
+				res += 'C'
+		return res[::-1]
+
+# print(reverse('TTA'))

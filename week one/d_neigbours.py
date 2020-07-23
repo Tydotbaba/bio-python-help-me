@@ -64,9 +64,10 @@ def neighbors(pattern, d):
 
 def findNeigbours(pattern, d):
     l = Neighbors(pattern, d)
-    for i in l:
-        # res += ' {}'.format(str(i))
-        print(i, end=' ')
+    return list(l)
+    # for i in l:
+    #     # res += ' {}'.format(str(i))
+    #     print(i, end=' ')
 
-
-findNeigbours('ACGT', 3)
+# findNeigbours('AT', 2)
+# print(sorted(findNeigbours('AAAA', 4)))
