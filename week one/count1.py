@@ -96,10 +96,10 @@ def ApproximatePatternCount(text, pattern, d):
 	for i, genome in enumerate(l):
 		if HammingDistance(pattern, genome) <= d:
 			count += 1
-			res.append(i)
+			res.append(str(i))
 
 	# print(count)
-	return ' '.join(str(res))
+	return ' '.join(res)
 
 
 
