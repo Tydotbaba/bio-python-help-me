@@ -119,11 +119,13 @@ def MinimumSkew(sequence):
 			skew_list = [index]
 			min_skew = skew
 		if skew == min_skew and index not in skew_list:
-			skew_list.append(index)	
-	return skew_list
+			skew_list.append(str(index))
+	for i in skew_list:
+		print(i, end=" ")
+	return 
 
 # change your code below this line
-sequence = ''
+sequence = 'TAAAGACTGCCGAGAGGCCAACACGAGTGCTAGAACGAGGGGCGTAAACGCGGGTCCGAT'
 # change your code above this line
 
-# print(MinimumSkew(sequence))
+MinimumSkew(sequence)
