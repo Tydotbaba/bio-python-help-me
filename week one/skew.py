@@ -1,20 +1,19 @@
-# text = ''
-# l = [0] 
-# g, c = 0,0
+text = ''
+l = [0] 
+g, c = 0,0
 
-# for genome in text:
-# 	# if genome == 'G':
-# 	# 	g += 1
-# 	# elif genome == 'C':
-# 	# 	c += 1 
-# 	g = 
-# 	l.append(g -c)
+for genome in text:
+	if genome == 'G':
+		g += 1
+	elif genome == 'C':
+		c += 1 
+	l.append(g -c)
 
 # # print(l)
 # # show result
 # print('Showing the skewi(genome)')
-# # for i in l:
-# # 	print(i, end=' ')
+for i in l:
+	print(i, end=' ')
 
 # m = max(l)
 # m = l.index(m)
@@ -127,4 +126,4 @@ def MinimumSkew(sequence):
 sequence = ''
 # change your code above this line
 
-print(MinimumSkew(sequence))
+# print(MinimumSkew(sequence))
