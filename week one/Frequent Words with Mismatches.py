@@ -269,7 +269,7 @@ def FrequentWordsWithMismatches(Text, k, d):
     return most_common
 
 # m = (ComputingFrequenciesWithMismatches(Text, k, d).count(5))
-print(FrequentWordsWithMismatches(Text, k, d))
+#print(FrequentWordsWithMismatches(Text, k, d))
 # print(m)
 # 3. build the frequency array with up to d mismatches 
 
@@ -318,3 +318,12 @@ def PermuteMotifDistanceTimes(motif, d):
     for _ in range(d):
         workingSet = set(itertools.chain.from_iterable(map(PermuteMotifOnce, workingSet)))
     return list(workingSet)
+
+
+# create variables to work with
+Text = 'ACGTTGCATGTCGCATGATGCATGAGAGCT'
+# patern = 'ACGT'
+k = 4
+d = 1
+
+print(FrequentWordsWithMismatches(Text, k, d))

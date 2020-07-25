@@ -71,6 +71,38 @@ def ApproximatePatternMatching(text, pattern, d):
 
 
 
+# Input:  Strings Pattern and Text along with an integer d
+# Output: A list containing all starting positions where Pattern appears
+# as a substring of Text with at most d mismatches
+def ApproximatePatternMatching(text, pattern, d):
+	l = [] # initializing list of positions
+	count = 0
+	def HammingDistance(p, q):
+		d = 0
+		for i, j in zip(p, q):
+			if i != j:
+				d += 1
+		return d
+
+	def makeList(text, pattern):
+		p = len(pattern)
+		for i in range(len(text) - p + 1):
+			l.append(text[i:i + p])
+
+	makeList(text, pattern)
+	#print(l)
+	# print(HammingDistance(p, q))
+	
+	res = []
+	for i, genome in enumerate(l):
+		if HammingDistance(pattern, genome) <= d:
+			count += 1
+			res.append(genome)
+
+	#print(count)
+	return res
+
+
 
 # countd(text, pattern)
 def ApproximatePatternCount(text, pattern, d):
