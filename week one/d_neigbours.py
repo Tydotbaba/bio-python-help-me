@@ -71,3 +71,6 @@ def findNeigbours(pattern, d):
 
 # findNeigbours('AT', 2)
 # print(sorted(findNeigbours('AAAA', 4)))
+
+
+

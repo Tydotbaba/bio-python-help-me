@@ -79,8 +79,8 @@ def  FrequentWords(Text, k):
 # 		Text = f.read()
 # except Exception as e:
 # 	raise e
-# Text = 'ACGTTGCATGTCGCATGATGCATGAGAGCT'
-# k = 12
+Text = 'ACGTTGCATGTCGCATGATGCATGAGAGCT'
+k = 12
 # # change your code above this line
 
 # print(FrequentWords(Text, k))
@@ -198,6 +198,102 @@ def ApproximatePatternCount(text, pattern, d):
 # print(ApproximatePatternCount(text, pattern, d))
 
 
+
+
+
+# # convert patern to number in the neigbours array
+def PatternToNumber(patern):
+	'''
+		convert patern to number given patern of k-mer
+		e.g: PatternToNumber('AAAA') -> 0
+		@args: i -> str, represents patern of each k-mer in 
+				lexicographic order
+		@returns: int, the index of patern in its Neighborhoods
+	'''
+	k =  len(patern)
+	if k == 0: 
+		return 0
+	symbol = patern[-1]
+	prefix = patern[:-1]
+
+	return 4 * PatternToNumber(prefix) + symbolToNumber(symbol)
+
+def symbolToNumber(neuclotide):
+	return {
+	        	'A': 0,
+		        'C': 1,
+		        'G': 2,
+		        'T': 3
+		    }.get(neuclotide, 0) 
+
+patern = 'ATGCAA'
+# print(PatternToNumber(patern))
+
+
+
+
+
+
+# convert patern to number in the neigbours array
+def NumberToPattern(index, k):
+	'''
+		convert patern to number given patern of k-mer
+		e.g: PatternToNumber('AAAA') -> 0
+		@args: index -> str, represents index a k-mer in 
+				lexicographic order
+		@args: k -> str, represents  of each k-mer in 
+				lexicographic order
+		@returns: int, the index of patern in its Neighborhoods
+	'''
+	if k == 1: 
+		return NumberToSymbol(index)
+	prefixIndex = index // 4
+	r = index % 4
+	symbol = NumberToSymbol(r)
+	# print(symbol)
+	return NumberToPattern(prefixIndex, k-1) + symbol
+	
+
+def NumberToSymbol(index):
+	return {
+	        	0: 'A',
+		        1: 'C',
+		        2: 'G',
+		        3: 'T'
+		    }.get(index) 
+
+index = 5437
+k = 8
+# print(NumberToPattern(index, k))
+
+
+
+
+
+import math
+def ComputingFrequencies(Text, k):
+	FrequencyArray = []
+	for i in range(int(math.pow(4, k))):
+		FrequencyArray.append(0)
+	for i in range(len(Text) - k + 1):
+		patern = Text[i:i+k]
+		j = PatternToNumber(patern)
+		FrequencyArray[j] += 1
+	# return ' '.join(map(str, FrequencyArray))
+	return FrequencyArray
+
+Text ='TGTGTGAATCCCGGGTCCGCTGTGTGACCCTTTTAAGGGCCTGTGCATCGATTCTAAATATCAAAGGCTGTGCTTGAATCCCATACATCGCCTGCCGATATAATTACGAGCGCAAACTTCCTGCCATGCGGCTGCTTACACTGTGCTTACCTACTCTATAGTCGCAATCAAGGACGTATATTCGTGATGCAGGCACTGGACATGCTCTGTCACAAGACTACGTGTTACGTTTACTGTACCGCGGCGACTACGATAATTAAAGCTGGCGGTACCGACCGGGCACCCGAACAATAAACACCAATGTCGTATATAAAGATTTTCAGGGCACGGTAAAGTGGCTTTCACTGAGACAATAGTATAACAGCTAGCCGTCGGCCTGAAATAAGCGCTGATAAATATCCCCGATTGCTCAACCGTTTGCAAGGGATTTTACAACTTCGAACAATTCGGGAGTCATACCATATCTCAAACTGATGGGGTACATCGGAGGTATTCTGAACGATGATCCACGCTTGGGGGCTGCGTTGGATTTGCTCTCAGCCAGTCCCCTTTTGTCACTCCTTTCACATCAGTAGAGAAGTTGTAGGATGGGGATGGTTTAAGCTGGGGAGTTATACACTATGCAACGCAGCTCACTCAGACTGTATCCAT'
+k = 7
+# print(ComputingFrequencies(Text, k))
+
+
+
+
+
+
+
+
+
 # Code Challenge: Solve the Clump Finding Problem (restated below). 
 # You will need to make sure that your algorithm is efficient 
 # enough to handle a large dataset.
@@ -223,30 +319,34 @@ import math
 def ClumpFinding(Genome, k, L, t):
 	FrequentPatterns = set()
 	clump = []
-	for i in range(int(math.pow(4,k)):
-		clump[i] = 0
+	for i in range(int(math.pow(4,k))):
+		clump.append(0)
 	for i in range(len(Genome) - L + 1):
 			text = Genome[i: i + L]
-			frequencyArray = ApproximatePatternCount(text, k, 0)
-			for i in range(int(math.pow(4,k)):
+			frequencyArray = ComputingFrequencies(text, k)
+			for i in range(int(math.pow(4,k))):
 				if frequencyArray[i] >= t:
 					clump[i] = 1
-	for i in range(int(math.pow(4,k)):
+	for i in range(int(math.pow(4,k))):
 		if clump[i] == 1:
 			pattern = NumberToPattern(i, k)
 			FrequentPatterns.add(pattern)
-	return FrequentPatterns
+	return ' '.join(map(str, FrequentPatterns))
 
 
-def NumberToPattern(i, k):
-    '''
-        convert number back to patern given i and k-mer
-        e.g: NumberToPattern(0, 4) -> 'AAAA'
-        @args: i -> int, represents index of each k-mer in in 
-                lexicographic order
-        @args: k -> int, represents the number of DNA k-mers
-        @returns: str, the patern of k-mers at index i in its Neighborhoods 
-    '''
-    patern = 'A' * k 
-    neigbours = sorted(findNeigbours(patern, k))
-    return neigbours[i]
+# change your code below this line
+# Genome = 'CGGACTCGACAGATGTGAAGAACGACAATGTGAAGACTCGACACGACAGAGTGAAGAGAAGAGGAAACATTGTAA'
+# read the file
+try:
+	with open('./datasets/dataset_2_7.txt') as f:
+		Genome = f.read()
+except Exception as e:
+	raise e
+k = 8
+L = 29
+t = 4
+# pattern = 'CTTGATCAT'
+
+# # change your code above this line
+
+print(ClumpFinding(Genome, k, L, t))
