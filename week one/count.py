@@ -152,15 +152,15 @@ def reverse(pattern):
 # the Vibrio cholerae genome.
 
 # change your code below this line
-# text = 'GATATATGCATATACTT'
+text = 'GATATATGCATATACTT'
 # read the file
 # try:
 # 	with open('./datasets/dataset_2_7.txt') as f:
 # 		text = f.read()
 # except Exception as e:
 # 	raise e
-# d = 0
-# pattern = 'CTTGATCAT'
+d = 0
+pattern = 'CTTGATCAT'
 
 # # change your code above this line
 
@@ -315,23 +315,67 @@ k = 7
 
 # CGACA GAAGA
 
+# import math
+# def ClumpFinding(Genome, k, L, t):
+# 	FrequentPatterns = set()
+# 	clump = []
+# 	for i in range(int(math.pow(4,k))):
+# 		clump.append(0)
+# 	for i in range(len(Genome) - L + 1):
+# 			text = Genome[i: i + L]
+# 			frequencyArray = ComputingFrequencies(text, k)
+# 			for i in range(int(math.pow(4,k))):
+# 				if frequencyArray[i] >= t:
+# 					clump[i] = 1
+# 	for i in range(int(math.pow(4,k))):
+# 		if clump[i] == 1:
+# 			pattern = NumberToPattern(i, k)
+# 			FrequentPatterns.add(pattern)
+# 	return ' '.join(map(str, FrequentPatterns))
+
+
+
+
+
 import math
+# def ClumpFinding(Genome, k, L, t):
+# 	FrequentPatterns = set()
+# 	clump = [0 for i in range(int(math.pow(4,k)))]
+# 	text = Genome[0:L]
+# 	frequencyArray = ComputingFrequencies(text, k)
+# 	for i in range(int(math.pow(4,k))):
+# 		if frequencyArray[i] >= t:
+# 			clump[i] = 1
+# 	for i in range(1, len(Genome) - L):
+# 		FirstPattern = Genome[i - 1:k]
+# 		index = PatternToNumber(FirstPattern)
+# 		frequencyArray[index] -= 1
+# 		LastPattern = Genome[i + L - k: k] 
+# 		index = PatternToNumber(LastPattern)
+# 		frequencyArray[index] += 1
+# 		if frequencyArray[index] >= t:
+# 			clump[index] = 1
+# 	for i in range(int(math.pow(4,k))):
+# 		if clump[i] == 1:
+# 			pattern = NumberToPattern(i, k)
+# 			FrequentPatterns.add(pattern)
+# 	return ' '.join(map(str, FrequentPatterns))
+
+
+
+
 def ClumpFinding(Genome, k, L, t):
 	FrequentPatterns = set()
-	clump = []
-	for i in range(int(math.pow(4,k))):
-		clump.append(0)
 	for i in range(len(Genome) - L + 1):
-			text = Genome[i: i + L]
-			frequencyArray = ComputingFrequencies(text, k)
-			for i in range(int(math.pow(4,k))):
-				if frequencyArray[i] >= t:
-					clump[i] = 1
-	for i in range(int(math.pow(4,k))):
-		if clump[i] == 1:
-			pattern = NumberToPattern(i, k)
-			FrequentPatterns.add(pattern)
+		count = [0 for i in range(len(Genome) - L + 1)]
+		for j in range(L - k + 1):
+			kmer = Genome(i + j: L)
+			count[kmer] += 1
+		for kmer in count:
+			if count[kmer] >= t:
+				FrequentPatterns.add(kmer)
 	return ' '.join(map(str, FrequentPatterns))
+
 
 
 # change your code below this line
@@ -342,8 +386,8 @@ try:
 		Genome = f.read()
 except Exception as e:
 	raise e
-k = 8
-L = 29
+k = 10
+L = 30
 t = 4
 # pattern = 'CTTGATCAT'
 
