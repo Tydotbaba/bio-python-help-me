@@ -88,7 +88,7 @@ def ClumpFinding(Genome, k, L, t):
 		FirstPattern = Genome[i - 1:i - 1 + k]
 		index = PatternToNumber(FirstPattern)
 		frequencyArray[index] -= 1
-		LastPattern = Genome[i + L - k: i + L + k] 
+		LastPattern = Genome[i + L - k: i + L] 
 		index = PatternToNumber(LastPattern)
 		frequencyArray[index] += 1
 		if frequencyArray[index] >= t:
@@ -130,3 +130,107 @@ def ClumpFinding(genome,k,L,t):
                         list.append(motif)
     return list
 
+
+
+
+# my submission
+# place your ClumpFinding() function here along with any subroutines you need.
+#def ClumpFinding(genome, k, L, t):
+import math
+
+def ComputingFrequencies(Text, k):
+	FrequencyArray = []
+	for i in range(int(math.pow(4, k))):
+		FrequencyArray.append(0)
+	for i in range(len(Text) - k + 1):
+		patern = Text[i:i+k]
+		j = PatternToNumber(patern)
+		FrequencyArray[j] += 1
+	# return ' '.join(map(str, FrequencyArray))
+	return FrequencyArray
+
+
+
+# # convert patern to number in the neigbours array
+def PatternToNumber(patern):
+	'''
+		convert patern to number given patern of k-mer
+		e.g: PatternToNumber('AAAA') -> 0
+		@args: i -> str, represents patern of each k-mer in 
+				lexicographic order
+		@returns: int, the index of patern in its Neighborhoods
+	'''
+	k =  len(patern)
+	if k == 0: 
+		return 0
+	symbol = patern[-1]
+	prefix = patern[:-1]
+
+	return 4 * PatternToNumber(prefix) + symbolToNumber(symbol)
+
+def symbolToNumber(neuclotide):
+	return {
+	        	'A': 0,
+		        'C': 1,
+		        'G': 2,
+		        'T': 3
+		    }.get(neuclotide, 0) 
+
+patern = 'ATGCAA'
+# print(PatternToNumber(patern))
+
+
+
+
+
+
+# convert patern to number in the neigbours array
+def NumberToPattern(index, k):
+	'''
+		convert patern to number given patern of k-mer
+		e.g: PatternToNumber('AAAA') -> 0
+		@args: index -> str, represents index a k-mer in 
+				lexicographic order
+		@args: k -> str, represents  of each k-mer in 
+				lexicographic order
+		@returns: int, the index of patern in its Neighborhoods
+	'''
+	if k == 1: 
+		return NumberToSymbol(index)
+	prefixIndex = index // 4
+	r = index % 4
+	symbol = NumberToSymbol(r)
+	# print(symbol)
+	return NumberToPattern(prefixIndex, k-1) + symbol
+	
+
+def NumberToSymbol(index):
+	return {
+	        	0: 'A',
+		        1: 'C',
+		        2: 'G',
+		        3: 'T'
+		    }.get(index) 
+
+def ClumpFinding(Genome, k, L, t):
+	FrequentPatterns = set()
+	clump = [0 for i in range(int(math.pow(4,k)))]
+	text = Genome[0:L]
+	frequencyArray = ComputingFrequencies(text, k)
+	for i in range(int(math.pow(4,k))):
+		if frequencyArray[i] >= t:
+			clump[i] = 1
+	for i in range(1, len(Genome) - L + 1):
+		FirstPattern = Genome[i - 1:i - 1 + k]
+		index = PatternToNumber(FirstPattern)
+		frequencyArray[index] -= 1
+		LastPattern = Genome[i + L - k: i+ L] 
+		index = PatternToNumber(LastPattern)
+		frequencyArray[index] += 1
+		if frequencyArray[index] >= t:
+			clump[index] = 1
+	for i in range(int(math.pow(4,k))):
+		if clump[i] == 1:
+			pattern = NumberToPattern(i, k)
+			FrequentPatterns.add(pattern)
+	return FrequentPatterns
