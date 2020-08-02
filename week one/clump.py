@@ -176,7 +176,7 @@ def symbolToNumber(neuclotide):
 		        'T': 3
 		    }.get(neuclotide, 0) 
 
-patern = 'ATGCAA'
+# patern = 'ATGCAA'
 # print(PatternToNumber(patern))
 
 
@@ -234,3 +234,19 @@ def ClumpFinding(Genome, k, L, t):
 			pattern = NumberToPattern(i, k)
 			FrequentPatterns.add(pattern)
 	return FrequentPatterns
+
+# change your code below this line
+# read the file
+Genome = 'CCACGCGGTGTACGCTGCAAAAAGCCTTGCTGAATCAAATAAGGTTCCAGCACATCCTCAATGGTTTCACGTTCTTCGCCAATGGCTGCCGCCAGGTTATCCAGACCTACAGGTCCACCAAAGAACTTATCGATTACCGCCAGCAACAATTTGCGGTCCATATAATCGAAACCTTCAGCATCGACATTCAACATATCCAGCG'
+# try:
+# 	with open('./datasets/dataset_2_7.txt') as f:
+# 		Genome = f.read()
+# except Exception as e:
+# 	raise e
+k = 3
+L = 25
+t = 3
+
+# change your code above this line	
+
+print(ClumpFinding(Genome, k, L, t))
