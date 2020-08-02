@@ -100,7 +100,11 @@ def ClumpFinding(Genome, k, L, t):
 	return FrequentPatterns
 
 
-
+try:
+	with open('E.coli genome.txt') as f:
+ 		genome = f.read()
+except Exception as e:
+ 	raise e
 
 # place your ClumpFinding() function here along with any subroutines you need.
 
