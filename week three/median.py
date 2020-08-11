@@ -26,7 +26,7 @@ def parseFile(f):
 	str_list = f.strip().split('\n')
 	res.append(str_list[0])
 	res.extend(str_list[1].split(' '))
-	print(res)
+	# print(res)
 	# print(str_list)
 
 	# return parsed result
