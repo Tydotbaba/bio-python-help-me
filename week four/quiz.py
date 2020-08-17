@@ -1,5 +1,6 @@
 
 
+
 '''
 Exercise Break: Compute Pr(TCGTGGATTTCC | Profile), 
 where Profile is the matrix shown above.
