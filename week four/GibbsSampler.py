@@ -176,7 +176,7 @@ def randomly_select_kmers(Dna, k):
 	
 
 
-def RandomizedMotifSearch(Dna, k, t):
+def GibbsSampler(Dna, k, t):
 	initial_motifs = randomly_select_kmers(Dna, k)
 	BestMotifs = randomly_select_kmers(Dna, k)
 	while True:
@@ -188,6 +188,18 @@ def RandomizedMotifSearch(Dna, k, t):
 		else:
 			return BestMotifs
 
+
+def Random(probabilities):
+    summand=sum(probabilities)
+    for i in range(len(probabilities)):
+        probabilities[i]=probabilities[i]/(summand)
+    random_number=random.random()
+    counter=0
+    for j in range(len(probabilities)):
+        if random_number>=counter and random_number<(counter+probabilities[j]):
+            return j
+        else:
+            counter+=probabilities[j]
 
 # code to parse input file for DistanceBetweenPatternAndStrings
 def parseFile(f):
@@ -219,7 +231,7 @@ def run():
 	lowest_motifs = []
 	i = 0
 	while True:
-		bestmotifs = RandomizedMotifSearch(Dna, k, t)
+		bestmotifs = GibbsSampler(Dna, k, t)
 		bestscore = Score(bestmotifs)
 		if bestscore < lowest_bestscore:
 			lowest_bestscore = bestscore

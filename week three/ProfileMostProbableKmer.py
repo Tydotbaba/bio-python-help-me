@@ -16,12 +16,12 @@ pattern = 'TCGTGGATTTCC'
 
 def Pr(pattern, Profile):
 	res = [Profile[genome][i] for i, genome in enumerate(pattern)]
-	# print(res)
+	print(res)
 	return prod(res)
 	# return reduce(lambda x, y: x * y, res)
 
 
-# print(Pr(pattern, Profile))
+print(Pr(pattern, Profile))
 
 
 
@@ -65,15 +65,15 @@ def parseFile(f):
 
 # change your code below this line
 # read the file
-try:
-	with open('./datasets/dataset_2_7.txt') as f:
-		Text = f.read()
-		text, k, profile = parseFile(Text)
+# try:
+	# with open('./datasets/dataset_2_7.txt') as f:
+	# 	Text = f.read()
+	# 	text, k, profile = parseFile(Text)
 		# print(text)
 		# print(k)
 		# print(profile)
-except Exception as e:
-	raise e
+# except Exception as e:
+	# raise e
 # change your code below this line for DistanceBetweenPatternAndStrings
 
 # print(ProfileMostProbableKmer(text, k, profile))
