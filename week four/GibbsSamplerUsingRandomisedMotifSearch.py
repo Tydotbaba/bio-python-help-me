@@ -5,15 +5,6 @@ where Profile is the matrix shown above.
 from collections import Counter 
 from functools import reduce
 
-Profile = {
-	'A': [4/5, 0.0, 0.0, 1/5],
-	'C': [0.0, 3/5, 1/5, 0.0],
-	'G': [1/5, 1/5, 4/5, 0.0],
-	'T': [0.0, 1/5, 0.0, 4/5],
-}
-
-pattern = 'TCGTGGATTTCC'
-
 def Pr(pattern, Profile):
 	res = [Profile[genome][i] for i, genome in enumerate(pattern)]
 	# print(res)
@@ -127,11 +118,6 @@ def Count(motifs):
 	# return the sum of the result
 	# print(result)
 	return result
-
-motifs = [
-	'GGCGT'
-]
-# print(Count(motifs))
 
 
 def ProfileMatrix(motifs):
@@ -434,13 +420,13 @@ def RandomizedMotifSearch(Dna, k, t):
 			i = 0
 		else:
 			i += 1
-		if i > 1000:
+		if i > 250:
 			break
 
 	return lowest_motifs
 
 if __name__ == "__main__":
-    k,t = [int(a) for a in input().strip().split(" ")]
+    k,t, n = [int(a) for a in input().strip().split(" ")]
     Dna = []
     for _ in range(t):
         Dna.append(input())

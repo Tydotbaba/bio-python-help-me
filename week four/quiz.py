@@ -8,15 +8,24 @@ where Profile is the matrix shown above.
 from collections import Counter 
 from functools import reduce
 
+Profile = {
+	'A': [3/8, 2/8, 2/8, 2/8],
+	'C': [1/8, 2/8, 2/8, 2/8],
+	'G': [2/8, 2/8, 2/8, 1/8],
+	'T': [2/8, 2/8, 2/8, 3/8]
+}
+
+
+pattern = 'ccgGCGTtag'.upper()
 
 def Pr(pattern, Profile):
 	res = [Profile[genome][i] for i, genome in enumerate(pattern)]
-	# print(res)
+	print(res)
 	# return prod(res)
 	return reduce(lambda x, y: x * y, res)
 
 
-# print(Pr(pattern, Profile))
+print(Pr(pattern, Profile))
 
 
 
@@ -117,7 +126,7 @@ motifs = [
 	'ATA',
 	'GCT'
 ]
-print(Count(motifs))
+# print(Count(motifs))
 
 
 def ProfileMatrix(motifs):
@@ -140,7 +149,7 @@ def ProfileMatrix(motifs):
 	# print(result)
 	return result
 
-print(ProfileMatrix(motifs))
+# print(ProfileMatrix(motifs))
 
 
 Dna = [
@@ -157,8 +166,8 @@ def Motifs(profile, Dna):
 		motifs.append(ProfileMostProbableKmer(string, k, profile))
 	return ' '.join(motifs)
 
-print('Motifs result: ...... ')
-print(Motifs(profile, Dna))
+# print('Motifs result: ...... ')
+# print(Motifs(profile, Dna))
 
 def RandomNumber(N):
 	'''generate random numbers from 1 - N and return it'''

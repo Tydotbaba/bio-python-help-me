@@ -4,15 +4,7 @@ where Profile is the matrix shown above.
 '''
 from collections import Counter 
 from functools import reduce
-
-Profile = {
-	'A': [4/5, 0.0, 0.0, 1/5],
-	'C': [0.0, 3/5, 1/5, 0.0],
-	'G': [1/5, 1/5, 4/5, 0.0],
-	'T': [0.0, 1/5, 0.0, 4/5],
-}
-
-pattern = 'TCGTGGATTTCC'
+import random
 
 def Pr(pattern, Profile):
 	res = [Profile[genome][i] for i, genome in enumerate(pattern)]
@@ -35,8 +27,6 @@ def Pr(pattern, Profile):
 	Code Challenge: Solve the Profile-most Probable k-mer Problem.
 '''
 
-
-
 def ProfileMostProbableKmer(text, k, profile):
 	# for each k-mer in test
 	# find Pr(k-mer, Profile)
@@ -46,15 +36,36 @@ def ProfileMostProbableKmer(text, k, profile):
 	return text[res.index(max(res)): res.index(max(res)) + k]
 	
 
+# def Profile_randomly_generated_k_mer(text, k, profile):
+# 	# for each k-mer in test
+# 	# find Pr(k-mer, Profile)
+# 	# find the maximum k-mer with high probability in Profile
+# 	res = [Pr(text[i : i + k], profile) for i in range(len(text) - k + 1)]
+# 	j = Random(res)
+# 	return text[j: j + k]
+	
 
 
 
-def Motifs(profile, Dna):
-	k = len(profile['A'])
-	motifs = []
-	for string in Dna:
-		motifs.append(ProfileMostProbableKmer(string, k, profile))
-	return motifs
+# def Random(probabilities):
+#     summand=sum(probabilities)
+#     for i in range(len(probabilities)):
+#         probabilities[i]=probabilities[i]/(summand)
+#     random_number=random.random()
+#     counter=0
+#     for j in range(len(probabilities)):
+#         if random_number>=counter and random_number<(counter+probabilities[j]):
+#             return j
+#         else:
+#             counter+=probabilities[j]
+
+
+# def Motifs(profile, Dna):
+# 	k = len(profile['A'])
+# 	motifs = []
+# 	for string in Dna:
+# 		motifs.append(ProfileMostProbableKmer(string, k, profile))
+# 	return motifs
 
 
 
@@ -158,10 +169,10 @@ def ProfileMatrix(motifs):
 
 def RandomNumber(N):
 	'''generate random numbers from 1 - N and return it'''
-	import random
+	
 	return random.randint(0, N)
 
-def randomly_select_kmers(Dna, k):
+def randomly_select_kmers(Dna, k, t):
 	''' randomly select kmers in each string in Dna
 		@args: Dna -> str, a dna of a bacterial of plant
 
@@ -176,39 +187,37 @@ def randomly_select_kmers(Dna, k):
 	
 
 
-def GibbsSampler(Dna, k, t):
-	initial_motifs = randomly_select_kmers(Dna, k)
-	BestMotifs = randomly_select_kmers(Dna, k)
-	while True:
-		profile = ProfileMatrix(initial_motifs)
-		motifs = Motifs(profile, Dna)
+def GibbsSampler(Dna, k, t, N):
+	initial_motifs = randomly_select_kmers(Dna, k, t)
+	BestMotifs = randomly_select_kmers(Dna, k, t)
+	motifs = initial_motifs
+	for j in range(N):
+		i = RandomNumber(t - 1)
+		motifs.pop(i)
+
+		profile = ProfileMatrix(motifs)
+		# calculate probabilities
+		pattern = ProfileMostProbableKmer(Dna[i], k, profile)
+		
+		# replace pattern in initial_motifs
+		motifs.insert(i,pattern)
+		# print(motifs)
+
 		if Score(motifs) < Score(BestMotifs):
 			BestMotifs = motifs
-			initial_motifs = motifs
-		else:
-			return BestMotifs
+		
+	return BestMotifs
 
 
-def Random(probabilities):
-    summand=sum(probabilities)
-    for i in range(len(probabilities)):
-        probabilities[i]=probabilities[i]/(summand)
-    random_number=random.random()
-    counter=0
-    for j in range(len(probabilities)):
-        if random_number>=counter and random_number<(counter+probabilities[j]):
-            return j
-        else:
-            counter+=probabilities[j]
 
 # code to parse input file for DistanceBetweenPatternAndStrings
 def parseFile(f):
 	str_list = f.strip().split('\n')
-	[k, t] = str_list[0].split()
+	[k, t, N] = str_list[0].split()
 	[*Dna] = str_list[1:]
-	k, t = int(k), int(t)
+	k, t, N = int(k), int(t), int(N)
 	# print(k, t, Dna)
-	return k, t, Dna
+	return k, t, N, Dna
 
 	 
 
@@ -219,7 +228,7 @@ def parseFile(f):
 try:
 	with open('./datasets/dataset_2_7.txt') as f:
 		Text = f.read()
-		k, t, Dna = parseFile(Text)
+		k, t, N, Dna = parseFile(Text)
 		# print(Dna)
 except Exception as e:
 	raise e
@@ -231,49 +240,31 @@ def run():
 	lowest_motifs = []
 	i = 0
 	while True:
-		bestmotifs = GibbsSampler(Dna, k, t)
+		bestmotifs = GibbsSampler(Dna, k, t, N)
 		bestscore = Score(bestmotifs)
 		if bestscore < lowest_bestscore:
 			lowest_bestscore = bestscore
 			lowest_motifs = bestmotifs
-			i = 0
-		else:
-			i += 1
-		if i > 900:
+		i += 1
+		# else:
+		# 	i += 1
+		if i > 350:
 			break
 
 	return '\n'.join(lowest_motifs)
 
+# Dna = [
+# 	'TTACCTTAAC',
+# 	'GATGTCTGTC',
+# 	'CCGGCGTTAG',
+# 	'CACTAACGAG',
+# 	'CGTCAGAGGT'
+# ]
+# k= 4
+# t = 5
+# N = 20
 
+# print(run())
+# print(GibbsSampler(Dna, k, t, N))
 print(run())
-# print(Motifs(Profile, Dna))
-
-
-
-'''
-  coded graded Problem
-
-'''
-
-from functools import reduce
-
-# Compute Pr(pattern | Profile)
-def Pr(pattern, Profile):
-	res = [Profile[genome][i] for i, genome in enumerate(pattern)]
-	# print(res)
-	return reduce(lambda x, y: x * y, res)
-
-
-def ProfileMostProbableKmer(text, k, profile):
-	# for each k-mer in test
-	# find Pr(k-mer, Profile)
-	# find the maximum k-mer with high probability in Profile
-	res = [Pr(text[i : i + k], profile) for i in range(len(text) - k + 1)]
-	# print([text[i : i + k] for i in range(len(text) - k + 1)], res, max(res), sep='\n')
-	return text[res.index(max(res)): res.index(max(res)) + k]
-
-
-
-
-
 
